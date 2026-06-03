@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FutureMe — Nitish’s Founder Labs</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <div class="ambient-lighting"></div>
+
+    <div id="toast-notification" class="toast"></div>
+
+    <nav id="main-nav">
+        <div class="nav-container">
+            <a href="#" class="logo">FutureMe<div class="logo-dot"></div></a>
+            <span class="brand-tag">Nitish’s Founder Labs</span>
+            <div class="nav-buttons">
+                <a href="#reflection-core" class="btn btn-primary">Start Reflection</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="container hero">
+        <h1>Meet the person you're becoming.</h1>
+        <p class="text-center">Translate your present trajectory, struggles, and ambitions into a highly intelligent strategy written directly by your future self.</p>
+        <div class="hero-ctas">
+            <a href="#reflection-core" class="btn btn-primary btn-large">Open Reflection Engine</a>
+        </div>
+    </header>
+
+    <section id="reflection-core" class="form-section section-padding">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2>The Horizon Metrics</h2>
+                <p>Be completely transparent. The more accurate your entry, the cleaner the structural echo from your future identity becomes.</p>
+            </div>
+
+            <div class="premium-form-wrapper" id="form-container">
+                <form id="reflectionForm">
+                    <div class="form-group-row">
+                        <div class="form-group">
+                            <input type="text" id="form-name" class="form-control" placeholder=" " required autocomplete="off">
+                            <label for="form-name">First Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" id="form-age" class="form-control" placeholder=" " required min="1" max="120">
+                            <label for="form-age">Current Age</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="form-goal" class="form-control" placeholder=" " required autocomplete="off">
+                        <label for="form-goal">Primary Long-Term Dream / Target Goal</label>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea id="form-struggle" class="form-control" placeholder=" " required></textarea>
+                        <label for="form-struggle">Current Struggle or Execution Bottleneck (e.g., Lack of consistency)</label>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea id="form-vision" class="form-control" placeholder=" " required></textarea>
+                        <label for="form-vision">One-Year Vision Matrix (Where exactly do you want to be 12 months from now?)</label>
+                    </div>
+
+                    <div class="form-group">
+                        <select id="form-tone" class="form-control selector-control" required>
+                            <option value="" disabled selected hidden></option>
+                            <option value="Motivational">Motivational (Warm, inspiring, deeply supportive)</option>
+                            <option value="Brutally Honest">Brutally Honest (Direct, sharp, cutting excuses)</option>
+                            <option value="Calm Mentor">Calm Mentor (Wise, balanced, evolutionary)</option>
+                            <option value="CEO Mode">CEO Mode (Strategic, metrics-focused, hyper-execution)</option>
+                        </select>
+                        <label for="form-tone">FutureMe Advisory Persona / Tone</label>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 56px;">
+                        <button type="submit" id="submit-btn" class="btn btn-primary btn-large" style="width: 100%;">Compile My Future Transmission</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="loading-experience">
+                <div class="orb-universe">
+                    <div class="quantum-orb"></div>
+                </div>
+                <div class="loader-title" id="loader-status-text">Creating your future identity...</div>
+                <div class="progress-container">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+
+            <div id="result-experience" class="hidden">
+                <div class="result-card glass-panel">
+                    <div class="result-header">
+                        <span class="mockup-badge" id="result-badge">Transmission Secure</span>
+                        <div class="mockup-date" id="result-date">October 14, 2027</div>
+                    </div>
+                    
+                    <div class="result-block">
+                        <h4 class="block-title">IDENTITY PROFILE</h4>
+                        <div class="identity-text" id="res-identity">Loading identity loop...</div>
+                    </div>
+
+                    <div class="result-block">
+                        <h4 class="block-title">TRANSMISSION FROM YOUR FUTURE SELF</h4>
+                        <div class="result-body" id="res-message">Loading core response logs...</div>
+                    </div>
+
+                    <div class="grid-two-col">
+                        <div class="result-block">
+                            <h4 class="block-title">IMMEDIATE CRITICAL MOVES</h4>
+                            <ul class="moves-list" id="res-moves"></ul>
+                        </div>
+                        <div class="result-block">
+                            <h4 class="block-title">DAILY HABIT FOCUS</h4>
+                            <div class="focus-box" id="res-habit"></div>
+                        </div>
+                    </div>
+
+                    <div class="grid-two-col" style="margin-top: 24px;">
+                        <div class="result-block">
+                            <h4 class="block-title">CRITICAL TRAJECTORY WARNING</h4>
+                            <div class="warning-box" id="res-warning"></div>
+                        </div>
+                        <div class="result-block">
+                            <h4 class="block-title">DAILY ALIGNMENT MANTRA</h4>
+                            <div class="mantra-box" id="res-mantra"></div>
+                        </div>
+                    </div>
+
+                    <div class="result-actions">
+                        <button class="btn btn-primary" id="btn-start-chat">Start Chat with FutureMe</button>
+                        <button class="btn btn-secondary" id="btn-copy">Copy Result</button>
+                        <button class="btn btn-text" id="btn-regenerate">Regenerate</button>
+                    </div>
+                </div>
+
+                <div class="chat-section glass-panel hidden" id="chat-module">
+                    <h3 class="chat-title">Direct Continuum Link</h3>
+                    <div class="chat-container" id="chat-stream">
+                        <div class="chat-bubble future-self" id="chat-initial-greeting">
+                            Data bridge secure. Ask your FutureMe anything...
+                        </div>
+                    </div>
+                    <div class="typing-indicator hidden" id="chat-typing">FutureMe is formulating guidance...</div>
+                    
+                    <div class="chat-input-wrapper">
+                        <input type="text" class="chat-input" id="chat-input-field" placeholder="Ask your FutureMe anything...">
+                        <button class="btn btn-primary" id="btn-send-chat">Send</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-bottom">
+            <div>© 2026 FutureMe Engine. Nitish’s Founder Labs. All programmatic rights reserved.</div>
+            <div>Built on Premium Blue Dark Ambient Architecture.</div>
+        </div>
+    </footer>
+</body>
+</html>

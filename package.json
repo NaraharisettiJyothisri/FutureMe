@@ -1,0 +1,8 @@
+{
+  "name": "futureme-netlify",
+  "version": "1.0.0",
+  "description": "Netlify serverless host configuration for FutureMe",
+  "dependencies": {
+    "@google/generative-ai": "^0.11.0"
+  }
+}
