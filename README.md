@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # FutureMe — Nitish's Founder Labs
 
 FutureMe is a premium, AI-powered personal reflection platform where founders translate their present trajectory, execution struggles, and future ambitions into a highly intelligent, actionable strategy written directly by their future successful self. 
@@ -134,3 +135,6 @@ Open your browser and navigate to:
   "reply": "Stop looking for an easier path. Do the exact task you are avoiding right now. Close this screen and execute."
 }
 ```
+=======
+# FutureMe
+>>>>>>> 424dc6d4a92a22a27f2a2516619f460f590e3abf
