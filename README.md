@@ -1,9 +1,21 @@
-<<<<<<< HEAD
-# FutureMe — Nitish's Founder Labs
+# FutureMe
 
-FutureMe is a premium, AI-powered personal reflection platform where founders translate their present trajectory, execution struggles, and future ambitions into a highly intelligent, actionable strategy written directly by their future successful self. 
+FutureMe is an AI-powered personal reflection platform that helps users receive guidance and insights from their future self.
 
-Built using a premium Apple-style dark ambient design system, the application creates a direct continuum bridge that makes users feel as if they are speaking directly with their future successful identity rather than interacting with a generic AI chatbot.
+## Features
+- Personalized future-self insights
+- AI-powered conversations
+- Interactive chat interface
+- Modern responsive UI
+- Netlify deployment
+
+## Tech Stack
+- HTML
+- CSS
+- JavaScript
+- Node.js
+- Gemini AI
+- Netlify
 
 ---
 
@@ -40,7 +52,7 @@ futureme/
 Follow these simple steps to run the application locally in under 60 seconds:
 
 ### Step 1: Open the Workspace
-Open `C:\Users\jhothi sri\.gemini\antigravity\scratch\futureme` in your editor or terminal.
+Open `Open the project folder in your editor or terminal.` in your editor or terminal.
 
 ### Step 2: Install Backend Dependencies
 Navigate to the `backend` folder and install dependencies:
@@ -81,12 +93,12 @@ Open your browser and navigate to:
 * **Payload**:
 ```json
 {
-  "name": "Nitish",
-  "age": "23",
-  "goal": "Build a successful AI startup",
+  "name": "User",
+  "age": "20",
+  "goal": "Become a Software Developer",
   "struggle": "Lack of consistency",
-  "oneYearVision": "Running a profitable AI company",
-  "tone": "Brutally Honest"
+  "oneYearVision": "Get a good job and improve skills",
+  "tone": "Motivational"
 }
 ```
 * **Output Response**:
@@ -94,16 +106,16 @@ Open your browser and navigate to:
 {
   "success": true,
   "data": {
-    "message": "Stop lying to yourself. The execution bottleneck you are coddling right now isn't some complex systemic issue...",
-    "futureIdentity": "The Zero-Excuse Operator (Nitish)",
+    "message": "Consistency and focused action are the keys to achieving your goals. Small daily improvements can create significant long-term results.",
+    "futureIdentity": "Future Self Mentor",
     "nextMoves": [
-      "Stop waiting for inspiration; write out an explicit micro-task pipeline.",
-      "Cut out all passive consumption cycles and focus strictly on production output metrics.",
-      "Eliminate all external negotiation vectors from your lifestyle design."
+      "Break your goal into smaller actionable tasks.",
+      "Create a daily schedule and follow it consistently.",
+      "Track your progress and adjust your plan regularly."
     ],
-    "habit": "Track your time blocks down to the single minute with aggressive zero-based planning.",
-    "warning": "Do not confuse movement with structural production progress.",
-    "mantra": "Suffer the discipline now, or suffer the regret forever."
+    "habit": "Spend at least 30 minutes every day working on your most important goal.",
+    "warning": "Avoid procrastination and distractions that delay progress.",
+    "mantra": "Small steps every day lead to extraordinary results."
   }
 }
 ```
@@ -115,26 +127,27 @@ Open your browser and navigate to:
 ```json
 {
   "userProfile": {
-    "name": "Nitish",
-    "age": "23",
-    "goal": "AI Startup",
-    "struggle": "Lack of consistency",
-    "oneYearVision": "Profitable company",
-    "tone": "Brutally Honest"
+    "name": "User",
+    "age": "20",
+    "goal": "Become a Software Developer",
+    "struggle": "Maintaining consistency",
+    "oneYearVision": "Secure a software development role",
+    "tone": "Motivational"
   },
   "chatHistory": [
-    { "role": "user", "message": "Will I actually make it?" }
+    {
+      "role": "user",
+      "message": "How can I stay consistent with my goals?"
+    }
   ],
-  "question": "What is the single highest leverage move today?"
+  "question": "What is the most important step I should take today?"
 }
 ```
 * **Output Response**:
 ```json
 {
   "success": true,
-  "reply": "Stop looking for an easier path. Do the exact task you are avoiding right now. Close this screen and execute."
+  "reply": "Your future success depends on what you do today. Identify your highest-priority task, complete it without distractions, and build momentum through consistent action."
 }
 ```
-=======
-# FutureMe
->>>>>>> 424dc6d4a92a22a27f2a2516619f460f590e3abf
+
