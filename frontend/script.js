@@ -156,6 +156,40 @@ function renderReflectionResult(data) {
     document.getElementById('res-warning').innerText = data.warning || "Maintain consistency above all.";
     document.getElementById('res-mantra').innerText = data.mantra || "Keep building.";
 
+    const actionPlanContainer =
+document.getElementById('action-plan');
+
+if (actionPlanContainer && data.actionPlan) {
+
+actionPlanContainer.innerHTML = `
+
+<h5>Week 1</h5>
+<ul>
+${data.actionPlan.week1.map(task =>
+`<li>${task}</li>`).join("")}
+</ul>
+
+<h5>Week 2</h5>
+<ul>
+${data.actionPlan.week2.map(task =>
+`<li>${task}</li>`).join("")}
+</ul>
+
+<h5>Week 3</h5>
+<ul>
+${data.actionPlan.week3.map(task =>
+`<li>${task}</li>`).join("")}
+</ul>
+
+<h5>Week 4</h5>
+<ul>
+${data.actionPlan.week4.map(task =>
+`<li>${task}</li>`).join("")}
+</ul>
+
+`;
+}
+
     // Configure initial chat context greeting
     document.getElementById('chat-initial-greeting').innerText = `Data bridge secure. Hello ${userProfileState.name}, I am your future self operating in a ${userProfileState.tone} framework. Ask me anything about scaling past our current bottleneck of "${userProfileState.struggle}"...`;
 
