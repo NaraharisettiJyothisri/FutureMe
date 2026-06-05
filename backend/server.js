@@ -279,17 +279,40 @@ const generateDynamicMockResponse = (name, age, goal, struggle, oneYearVision, t
     "CEO Mode": ["The High-Performance Enterprise Engine", "The Chief Output Architect", "The Systems Strategist", "The Bandwidth Optimizer"]
   };
   const identityBase = selectRandom(identityList[tone] || identityList["Motivational"]);
-
-  return {
+return {
     message: messageText,
     futureIdentity: `${identityBase} (${name})`,
     nextMoves: movesSet,
     habit: habitText,
     warning: warningText,
     mantra: mantraText,
+
+    actionPlan: {
+        week1: [
+            `Research and plan your path toward ${goal}`,
+            `Create a daily schedule`,
+            `Identify distractions causing ${struggle}`
+        ],
+        week2: [
+            `Work 30 minutes daily on ${goal}`,
+            `Track your progress every evening`,
+            `Improve one weak habit`
+        ],
+        week3: [
+            `Increase focused work sessions`,
+            `Review weekly progress`,
+            `Adjust strategy if needed`
+        ],
+        week4: [
+            `Complete a small milestone`,
+            `Measure results`,
+            `Prepare the next 30-day plan`
+        ]
+    },
+
     isMock: true
-  };
 };
+
 
 // Programmatic dynamic mock chat responder (Generates custom, context-relevant responses in failsafe mode)
 const generateDynamicMockChatResponse = (userProfile, chatHistory, question) => {
@@ -394,13 +417,29 @@ One-year vision: ${oneYearVision}
 
 Return only valid JSON in this exact format:
 {
-  "message": "A powerful 120-180 word message from the future self. Incorporate direct references to their goal, struggle, and vision.",
-  "futureIdentity": "A concise description of who the user is becoming (e.g. 'The High-Performance Enterprise Engine', 'The Calm Catalyst').",
+  "message": "A powerful 120-180 word message from the future self.",
+  "futureIdentity": "A concise description of who the user is becoming.",
   "nextMoves": ["Action 1", "Action 2", "Action 3"],
   "habit": "One small daily habit they should start today.",
   "warning": "One mistake their future self warns them about.",
-  "mantra": "A short memorable line they can repeat daily."
+  "mantra": "A short memorable line they can repeat daily.",
+  "actionPlan": {
+    "week1": ["Task 1", "Task 2", "Task 3"],
+    "week2": ["Task 1", "Task 2", "Task 3"],
+    "week3": ["Task 1", "Task 2", "Task 3"],
+    "week4": ["Task 1", "Task 2", "Task 3"]
+  }
 }
+
+Generate a realistic 30-day action plan.
+
+Requirements:
+- 3 tasks per week
+- Tasks must be practical
+- Tasks must align with the user's goal
+- Tasks must address the user's struggle
+- Avoid generic advice
+- Make tasks achievable
 
 Make it specific. Avoid generic motivation. Avoid clichés. Make it emotional but practical. Do NOT include markdown styling or any wrap text, only the raw JSON.`;
 
