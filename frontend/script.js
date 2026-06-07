@@ -287,6 +287,7 @@ function initChatEngine() {
             errorBubble.style.background = 'rgba(255, 59, 48, 0.05)';
             errorBubble.innerText = "Timeline link experiencing interference. FutureMe could not respond right now. Try asking again.";
             chatStream.appendChild(errorBubble);
+            console.error("CHAT ERROR:", error);
         } finally {
             // Reactivate interface controls
             chatInputField.disabled = false;

@@ -5,8 +5,9 @@ const dotenv = require('dotenv');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 // Load environment variables
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '.env') });
 
+console.log("API KEY FOUND:", process.env.GEMINI_API_KEY);
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -272,6 +273,82 @@ const generateDynamicMockResponse = (name, age, goal, struggle, oneYearVision, t
   const warningText = selectRandom(toneDict.warnings);
   const mantraText = selectRandom(toneDict.mantras);
 
+  // Compile Dynamic Daily Plan based on tone
+  let dailyPlan = [];
+  if (tone === "Motivational") {
+    dailyPlan = [
+      {
+        time: "07:30 AM - 09:00 AM",
+        activity: `Deep-Work: Focus entirely on "${goal}"`,
+        details: "The morning hours are your highest cognitive asset. Put them directly into building."
+      },
+      {
+        time: "01:30 PM - 02:00 PM",
+        activity: `Mindful Check-in: Realignment against "${struggle}"`,
+        details: "Take 5 deep breaths, pause execution, and verify you are not procrastinating."
+      },
+      {
+        time: "08:30 PM - 09:00 PM",
+        activity: `Wind-down & Plan: Prep tomorrow's first step for "${oneYearVision}"`,
+        details: "Establish consistency by setting up your environment for the next day."
+      }
+    ];
+  } else if (tone === "Brutally Honest") {
+    dailyPlan = [
+      {
+        time: "06:00 AM - 07:30 AM",
+        activity: `Non-Negotiable Execution: Code/Work on "${goal}"`,
+        details: "No social media. No notifications. Just pure raw progress before anyone else wakes up."
+      },
+      {
+        time: "12:00 PM - 12:30 PM",
+        activity: `Clinical Review: Log time slots and expose "${struggle}" leaks`,
+        details: "Track exactly where you drifted. Highlight the excuses you made and shut them down."
+      },
+      {
+        time: "09:00 PM - 09:30 PM",
+        activity: `Zero-Based Planning: Prepare tomorrow's task checklist`,
+        details: "Identify the single hardest task for tomorrow. Commit to doing it first."
+      }
+    ];
+  } else if (tone === "Calm Mentor") {
+    dailyPlan = [
+      {
+        time: "08:00 AM - 09:30 AM",
+        activity: `Quiet Synthesis: Creative deep work on "${goal}"`,
+        details: "Work with absolute presence. Quality beats hurried volume."
+      },
+      {
+        time: "03:00 PM - 03:30 PM",
+        activity: `Cognitive Rest & Alignment: Detaching from "${struggle}" stress`,
+        details: "Step away from screens. Observe your mental bandwidth and ground yourself."
+      },
+      {
+        time: "06:00 PM - 06:30 PM",
+        activity: `Reflective Review: Acknowledge daily system adjustments`,
+        details: "Track how your environment supported or hindered your focus today."
+      }
+    ];
+  } else { // CEO Mode
+    dailyPlan = [
+      {
+        time: "07:00 AM - 08:30 AM",
+        activity: `High-Leverage Work: Scale core value for "${goal}"`,
+        details: "Prioritize your highest-converting growth metric. Block out all noise."
+      },
+      {
+        time: "01:00 PM - 01:30 PM",
+        activity: `Operational Review: Resolve the "${struggle}" bottleneck`,
+        details: "Check today's task completion rate. Adjust resources to bypass execution blockers."
+      },
+      {
+        time: "05:00 PM - 05:30 PM",
+        activity: `Roadmap Alignment: Set KPIs for tomorrow`,
+        details: "Prepare tomorrow's operational matrix to preserve tomorrow's bandwidth."
+      }
+    ];
+  }
+
   const identityList = {
     "Motivational": ["The Unstoppable Catalyst", "The Inspired Architect", "The Evolutionary Force", "The Timeline Breaker"],
     "Brutally Honest": ["The Zero-Excuse Operator", "The High-Velocity Directive", "The Clinical Pragmatist", "The Execution Catalyst"],
@@ -286,6 +363,7 @@ return {
     habit: habitText,
     warning: warningText,
     mantra: mantraText,
+
 
     actionPlan: {
         week1: [
@@ -310,9 +388,10 @@ return {
         ]
     },
 
+    dailyPlan: dailyPlan,
     isMock: true
 };
-
+};
 
 // Programmatic dynamic mock chat responder (Generates custom, context-relevant responses in failsafe mode)
 const generateDynamicMockChatResponse = (userProfile, chatHistory, question) => {
@@ -394,8 +473,10 @@ app.post('/api/generate-futureme', async (req, res) => {
 
   try {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    // Use gemini-1.5-flash for speed and reliability
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    // Use gemini-2.5-flash for speed and reliability
+   const model = genAI.getGenerativeModel({
+  model: "gemini-2.5-flash"
+});
 
     const systemPrompt = `You are FutureMe, the future successful version of the user. You are not a generic motivational coach. You speak with emotional intelligence, clarity, and deep personal understanding. Your job is to help the user see who they are becoming, what they must change, and what they should do next.
 
@@ -423,6 +504,7 @@ Return only valid JSON in this exact format:
   "habit": "One small daily habit they should start today.",
   "warning": "One mistake their future self warns them about.",
   "mantra": "A short memorable line they can repeat daily.",
+
   "actionPlan": {
     "week1": ["Task 1", "Task 2", "Task 3"],
     "week2": ["Task 1", "Task 2", "Task 3"],
@@ -443,6 +525,7 @@ Requirements:
 
 Make it specific. Avoid generic motivation. Avoid clichés. Make it emotional but practical. Do NOT include markdown styling or any wrap text, only the raw JSON.`;
 
+  
     const result = await model.generateContent(systemPrompt);
     const responseText = result.response.text();
     
@@ -498,7 +581,7 @@ app.post('/api/chat-futureme', async (req, res) => {
 
   try {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     // Format chat history for prompt
     const formattedHistory = (chatHistory || [])

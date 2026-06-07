@@ -107,7 +107,7 @@ exports.handler = async (event, context) => {
     }
 
     const genAI = new GoogleGenerativeAI(getCleanApiKey());
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const formattedHistory = (chatHistory || [])
       .map(msg => `${msg.role === 'user' ? 'Current Me' : 'Future Me'}: ${msg.message}`)
