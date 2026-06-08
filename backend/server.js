@@ -41,7 +41,7 @@ const isApiKeyConfigured = () => {
 };
 
 // Advanced Generative Phrase Synthesis Engine (Mimics real-time LLM reasoning like ChatGPT/Gemini)
-const generateDynamicMockResponse = (name, age, goal, struggle, oneYearVision, tone) => {
+const generateDynamicMockResponse = (name, age, goal, struggle, oneYearVision, tone,language) => {
   const dictionary = {
     "Motivational": {
       openers: [
@@ -448,7 +448,7 @@ const generateDynamicMockChatResponse = (userProfile, chatHistory, question) => 
  * Compiles reflection metrics into a cohesive FutureMe profile using Gemini.
  */
 app.post('/api/generate-futureme', async (req, res) => {
-  const { name, age, goal, struggle, oneYearVision, tone } = req.body;
+  const { name, age, goal, struggle, oneYearVision, tone,language } = req.body;
 
   // Input validation
   if (!name || !age || !goal || !struggle || !oneYearVision || !tone) {
@@ -483,6 +483,12 @@ app.post('/api/generate-futureme', async (req, res) => {
 Write as if you are the user’s future self speaking directly to their current self. Make it personal, highly impactful, and tailored.
 
 Tone selected by user: ${tone}
+Response language: ${language}
+
+Language Rules:
+- Generate all responses in the selected language.
+- Do not mix languages unless the selected language is English.
+- Keep the same emotional tone while using the selected language.
 Adaptive Style Guideline:
 - Motivational: warm, inspiring, deeply supportive, encouraging.
 - Brutally Honest: direct, sharp, cutting excuses, no negotiations, high velocity.
@@ -597,12 +603,25 @@ Goal: ${userProfile.goal}
 Struggle: ${userProfile.struggle}
 One-year vision: ${userProfile.oneYearVision}
 Tone: ${userProfile.tone}
+Language: ${userProfile.language}
 
+Language Rules:
+- Reply entirely in the selected language.
+- If the user changes language during chat, follow the user's latest language request.
+- Always answer in the selected language unless explicitly asked otherwise.
 Adaptive Tone Guideline:
 - Motivational: warm, inspiring, deeply supportive.
 - Brutally Honest: direct, sharp, no excuses, high standards.
 - Calm Mentor: peaceful, wise, evolutionary, grounded.
 - CEO Mode: strategic, operational, hyper-execution.
+
+Important Rules:
+- Always answer the user's direct question first.
+- Then connect the answer to their goals and future growth.
+- Always use the user's name exactly as provided.
+- Never modify, shorten, or misspell the user's name.
+- If the user asks a simple question, answer it directly before giving advice.
+- Stay in character as the user's future self, but do not ignore the actual question.
 
 Recent chat history:
 ${formattedHistory || "No messages exchanged yet."}
@@ -618,12 +637,13 @@ Reply in 2-5 short paragraphs. Give at least one clear, practical action. Speak 
     return res.json({ success: true, reply: replyText });
 
   } catch (error) {
-    console.error("Gemini Chat Error:", error);
-    return res.status(500).json({ 
-      success: false, 
-      error: "FutureMe could not formulate guidance right now. Try again." 
-    });
-  }
+   console.error("CHAT ERROR FULL:", error);
+
+   return res.status(500).json({
+      success: false,
+      error: "Timeline link experiencing interference. FutureMe could not respond right now. Try asking again."
+   });
+}
 });
 
 // Catch-all route to serve the SPA

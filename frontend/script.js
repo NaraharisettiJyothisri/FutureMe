@@ -50,7 +50,8 @@ function initFormEngine() {
             goal: document.getElementById('form-goal').value.trim(),
             struggle: document.getElementById('form-struggle').value.trim(),
             oneYearVision: document.getElementById('form-vision').value.trim(),
-            tone: document.getElementById('form-tone').value
+            tone: document.getElementById('form-tone').value,
+             language: document.getElementById('form-language').value
         };
 
         // Transition UI state to Loading Experience
@@ -277,7 +278,8 @@ function initChatEngine() {
                 throw new Error(result.error || "Failed to formulate guidance.");
             }
 
-        } catch (error) {
+        } 
+        catch (error) {
             console.error("Chat API Error:", error);
             chatTyping.classList.add('hidden');
 
