@@ -546,6 +546,7 @@ Make it specific. Avoid generic motivation. Avoid clichés. Make it emotional bu
 
     try {
       const parsedData = JSON.parse(cleanedText);
+      console.log("PARSED DATA:", parsedData);
       return res.json({ success: true, data: parsedData });
     } catch (parseErr) {
       console.error("Failed to parse Gemini response as JSON. Raw output:", responseText);
