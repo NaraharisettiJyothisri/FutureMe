@@ -123,7 +123,7 @@ function renderReflectionResult(data) {
     console.log("RENDER DATA:", data);
 
 const targetHorizonYear = new Date().getFullYear() + 1;
-    const targetHorizonYear = new Date().getFullYear() + 1;
+    
 
     // Show secure badge status (demo indication is helpful for Nitish's Sunday review)
     const badge = document.getElementById('result-badge');
