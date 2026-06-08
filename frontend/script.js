@@ -120,6 +120,9 @@ function initFormEngine() {
 
 // Dynamically Inject Transmitted Profile Data
 function renderReflectionResult(data) {
+    console.log("RENDER DATA:", data);
+
+const targetHorizonYear = new Date().getFullYear() + 1;
     const targetHorizonYear = new Date().getFullYear() + 1;
 
     // Show secure badge status (demo indication is helpful for Nitish's Sunday review)
@@ -190,9 +193,6 @@ ${data.actionPlan.week4.map(task =>
 
 `;
 }
-console.log("ACTION PLAN HTML:", actionPlanContainer.innerHTML);
-actionPlanContainer.style.border = "2px solid red";
-actionPlanContainer.style.padding = "20px";
     // Configure initial chat context greeting
     document.getElementById('chat-initial-greeting').innerText = `Data bridge secure. Hello ${userProfileState.name}, I am your future self operating in a ${userProfileState.tone} framework. Ask me anything about scaling past our current bottleneck of "${userProfileState.struggle}"...`;
 
