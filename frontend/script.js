@@ -162,7 +162,7 @@ document.getElementById('action-plan');
 
 if (actionPlanContainer && data.actionPlan) {
 
-actionPlanContainer.innerHTML = `
+ actionPlanContainer.innerHTML= `
 
 <h5>Week 1</h5>
 <ul>
@@ -190,7 +190,9 @@ ${data.actionPlan.week4.map(task =>
 
 `;
 }
-
+console.log("ACTION PLAN HTML:", actionPlanContainer.innerHTML);
+actionPlanContainer.style.border = "2px solid red";
+actionPlanContainer.style.padding = "20px";
     // Configure initial chat context greeting
     document.getElementById('chat-initial-greeting').innerText = `Data bridge secure. Hello ${userProfileState.name}, I am your future self operating in a ${userProfileState.tone} framework. Ask me anything about scaling past our current bottleneck of "${userProfileState.struggle}"...`;
 
