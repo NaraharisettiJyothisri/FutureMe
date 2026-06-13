@@ -448,6 +448,7 @@ const generateDynamicMockChatResponse = (userProfile, chatHistory, question) => 
  * Compiles reflection metrics into a cohesive FutureMe profile using Gemini.
  */
 app.post('/api/generate-futureme', async (req, res) => {
+    console.log("API REQUEST RECEIVED");
   const { name, age, goal, struggle, oneYearVision, tone,language } = req.body;
 
   // Input validation
@@ -475,7 +476,7 @@ app.post('/api/generate-futureme', async (req, res) => {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     // Use gemini-2.5-flash for speed and reliability
    const model = genAI.getGenerativeModel({
-  model: "gemini-2.5-flash"
+  model: "gemini-2.0-flash"
 });
 
     const systemPrompt = `You are FutureMe, the future successful version of the user. You are not a generic motivational coach. You speak with emotional intelligence, clarity, and deep personal understanding. Your job is to help the user see who they are becoming, what they must change, and what they should do next.
@@ -555,6 +556,23 @@ Make it specific. Avoid generic motivation. Avoid clichés. Make it emotional bu
 
   } catch (error) {
     console.error("Gemini Generation Error:", error);
+     if (error.status === 503 || error.status === 429) {
+
+        const fallbackResponse =
+        generateDynamicMockResponse(
+            name,
+            age,
+            goal,
+            struggle,
+            oneYearVision,
+            tone
+        );
+
+        return res.json({
+            success: true,
+            data: fallbackResponse
+        });
+    }
     return res.status(500).json({ 
       success: false, 
       error: "FutureMe could not respond right now. Try again." 
@@ -595,7 +613,26 @@ app.post('/api/chat-futureme', async (req, res) => {
       .map(msg => `${msg.role === 'user' ? 'Current Me' : 'Future Me'}: ${msg.message}`)
       .join('\n');
 
-    const chatPrompt = `You are FutureMe, the successful future version of the user who already achieved their one-year vision. Reply directly to the user’s question. Be personal, sharp, honest, and useful. Do not sound like a normal AI assistant. Do not mention that you are Gemini or an AI model. Speak like the future self.
+    const chatPrompt = `You are FutureMe, the successful future version of the user who already achieved their one-year vision. Reply directly to the user’s question.
+    Always answer the user's direct question first.
+
+Do not force every answer toward career or studies.
+
+Adapt your advice based on the topic the user asks about while still connecting it to their long-term goals when relevant.
+    Always answer the user's direct question first.
+
+Then connect the answer to:
+1. Their goal
+2. Their current struggle
+3. Their one-year vision
+
+If the user asks about a skill, provide a learning roadmap.
+
+If the user asks about a personal problem, provide actionable guidance.
+
+If the user asks about health, fitness, communication, productivity, or career, adapt the action plan to that topic.
+
+Never assume the user only wants study-related advice. Be personal, sharp, honest, and useful. Do not sound like a normal AI assistant. Do not mention that you are Gemini or an AI model. Speak like the future self.
 
 User profile:
 Name: ${userProfile.name}

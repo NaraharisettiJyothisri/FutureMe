@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <body>
 
     <div class="ambient-lighting"></div>
@@ -105,13 +106,16 @@
                 <div class="result-card glass-panel">
                     <div class="result-header">
                         <span class="mockup-badge" id="result-badge">Transmission Secure</span>
-                        <div class="mockup-date" id="result-date">October 14, 2027</div>
+                        <div id="streak-box" style="margin-top:10px;color:#0dbcff;font-weight:600;">
+🔥 Current Streak: 0 Days
+</div>
+                      
                     </div>
                     <div class="result-block">
    <h4>30 DAY ACTION PLAN</h4>
    <div id="action-plan"></div>
 </div>
-                    
+      
                     <div class="result-block">
                         <h4 class="block-title">IDENTITY PROFILE</h4>
                         <div class="identity-text" id="res-identity">Loading identity loop...</div>
@@ -147,30 +151,35 @@
                     <div class="result-actions">
                         <button class="btn btn-primary" id="btn-start-chat">Start Chat with FutureMe</button>
                         <button class="btn btn-secondary" id="btn-copy">Copy Result</button>
+                        <button class="btn btn-secondary" id="btn-pdf">
+    Download PDF
+</button>
                         <button class="btn btn-text" id="btn-regenerate">Regenerate</button>
+                        <button class="btn btn-secondary" id="btn-history">
+View Past Futures
+</button>
                     </div>
                 </div>
+<div class="result-card glass-panel hidden" id="history-section">
+    <div class="result-header">
+        <span class="mockup-badge">Past Futures</span>
+    </div>
 
-                <div class="result-card glass-panel" style="margin-top: 32px;" id="blueprint-card">
+    <div id="analytics-box"></div>
+    <div id="history-container"></div>
+</div>
+               <div class="result-card glass-panel hidden" id="blueprint-card"></div>
                     <div class="result-header">
-                        <span class="mockup-badge" style="border-color: rgba(13, 188, 255, 0.3); color: #0dbcff; background: rgba(13, 188, 255, 0.05);">Daily Continuum Blueprint</span>
-                        <div class="blueprint-progress-wrapper" style="display: flex; align-items: center; gap: 12px;">
-                            <span style="font-size: 13px; color: var(--text-muted); font-weight: 500;">Plan Execution:</span>
-                            <div class="progress-bar-container" style="width: 100px; height: 6px; background: rgba(255,255,255,0.03); border-radius: 99px; overflow: hidden; position: relative;">
-                                <div class="progress-bar-fill" id="blueprint-progress-fill" style="width: 0%; height: 100%; background: linear-gradient(90deg, #007aff, #0dbcff); transition: width 0.4s var(--easing-premium); box-shadow: 0 0 8px #0dbcff;"></div>
-                            </div>
-                            <span id="blueprint-progress-percent" style="font-size: 13px; color: #0dbcff; font-weight: 600;">0%</span>
-                        </div>
-                    </div>
+                      
+<div class="result-card glass-panel">
+    <div class="result-header">
+        <span class="mockup-badge">
+            Future Timeline
+        </span>
+    </div>
 
-                    <div class="result-block">
-                        <p style="font-size: 15px; line-height: 1.6; margin-bottom: 24px; color: var(--text-body);">Your future self has constructed a high-leverage 3-stage schedule designed to bypass our consistency bottleneck. Toggle checkboxes as you execute your day:</p>
-                        <div class="blueprint-list" id="blueprint-list-container">
-                            <!-- Tasks will be rendered dynamically here -->
-                        </div>
-                    </div>
-                </div>
-
+    <div id="timeline-box"></div>
+</div>
                 <div class="chat-section glass-panel hidden" id="chat-module">
                     <h3 class="chat-title">Direct Continuum Link</h3>
                     <div class="chat-container" id="chat-stream">

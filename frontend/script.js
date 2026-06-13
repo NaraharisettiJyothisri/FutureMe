@@ -14,6 +14,52 @@ document.addEventListener('DOMContentLoaded', () => {
     initFormEngine();
     initChatEngine();
     initActionUtilities();
+    const historyBtn =
+document.getElementById("btn-history");
+
+if (historyBtn) {
+
+historyBtn.addEventListener("click", () => {
+
+const historySection =
+document.getElementById("history-section");
+
+const historyContainer =
+document.getElementById("history-container");
+
+historySection.classList.remove("hidden");
+const history =
+JSON.parse(
+localStorage.getItem("futureHistory")
+) || [];
+const analytics =
+document.getElementById("analytics-box");
+
+analytics.innerHTML = `
+<div style="margin-bottom:20px;padding:16px;border:1px solid rgba(255,255,255,0.1);border-radius:12px;">
+<h3>Analytics Dashboard</h3>
+<p>Total Futures Generated: ${history.length}</p>
+<p>Current Streak: ${localStorage.getItem("streak") || 0}</p>
+</div>
+`;
+
+
+historyContainer.innerHTML = "";
+
+history.reverse().forEach(item => {
+
+historyContainer.innerHTML += `
+<div style="margin-bottom:20px;padding:16px;border:1px solid rgba(255,255,255,0.1);border-radius:12px;">
+<h4>${item.futureIdentity}</h4>
+<p>${item.message}</p>
+</div>
+`;
+
+});
+
+});
+
+}
 });
 
 // Toast notification alerts
@@ -121,8 +167,41 @@ function initFormEngine() {
 // Dynamically Inject Transmitted Profile Data
 function renderReflectionResult(data) {
     console.log("RENDER DATA:", data);
+    const today = new Date().toDateString();
 
-const targetHorizonYear = new Date().getFullYear() + 1;
+    const lastVisit =
+    localStorage.getItem("lastVisitDate");
+
+    let streak =
+    parseInt(
+    localStorage.getItem("streak")
+    ) || 0;
+
+    if(lastVisit !== today){
+
+        streak++;
+
+        localStorage.setItem(
+            "streak",
+            streak
+        );
+
+        localStorage.setItem(
+            "lastVisitDate",
+            today
+        );
+    }
+   const streakBox =
+    document.getElementById("streak-box");
+
+    if(streakBox){
+        streakBox.innerText =
+        `🔥 Current Streak: ${streak} Days`;
+    }
+    
+
+
+
     
 
     // Show secure badge status (demo indication is helpful for Nitish's Sunday review)
@@ -141,7 +220,8 @@ const targetHorizonYear = new Date().getFullYear() + 1;
     }
 
     // Bind parameters to outcome cards
-    document.getElementById('result-date').innerText = `October 14, ${targetHorizonYear}`;
+   const targetHorizonYear =
+new Date().getFullYear() + 1;
     document.getElementById('res-identity').innerText = data.futureIdentity || `${userProfileState.tone} Version (${userProfileState.name})`;
     document.getElementById('res-message').innerHTML = `"${data.message || ''}"`;
     
@@ -159,7 +239,14 @@ const targetHorizonYear = new Date().getFullYear() + 1;
     document.getElementById('res-habit').innerText = data.habit || "Formulate focus daily.";
     document.getElementById('res-warning').innerText = data.warning || "Maintain consistency above all.";
     document.getElementById('res-mantra').innerText = data.mantra || "Keep building.";
-
+document.getElementById(
+"timeline-box"
+).innerHTML = `
+<p>📅 30 Days → Build daily consistency</p>
+<p>📅 3 Months → Visible improvement</p>
+<p>📅 6 Months → Intermediate progress achieved</p>
+<p>📅 1 Year → Long-term goal achieved</p>
+`;
     const actionPlanContainer =
 document.getElementById('action-plan');
 
@@ -210,6 +297,16 @@ ${data.actionPlan.week4.map(task =>
 
     // Show output layout
     const resultExperience = document.getElementById('result-experience');
+    console.log("Saving history:", data);
+    const history =
+JSON.parse(localStorage.getItem("futureHistory")) || [];
+
+history.push(data);
+
+localStorage.setItem(
+"futureHistory",
+JSON.stringify(history)
+);
     resultExperience.classList.remove('hidden');
     resultExperience.scrollIntoView({ behavior: 'smooth' });
 }
@@ -311,12 +408,14 @@ function initChatEngine() {
 function initActionUtilities() {
     const btnCopy = document.getElementById('btn-copy');
     const btnRegenerate = document.getElementById('btn-regenerate');
-
+   const pdfBtn = document.getElementById('btn-pdf');
     if (btnCopy) {
         btnCopy.addEventListener('click', () => {
             const message = document.getElementById('res-message').innerText;
             const mantra = document.getElementById('res-mantra').innerText;
             const identity = document.getElementById('res-identity').innerText;
+            const habit =document.getElementById("res-habit").innerText;
+            const warning =document.getElementById("res-warning").innerText;
             
             const fullCopiedText = `FutureMe Strategy Matrix for ${userProfileState.name}:\n` +
                                    `Identity: ${identity}\n\n` +
@@ -329,7 +428,79 @@ function initActionUtilities() {
                 .catch(() => showToast('Clipboard injection blocked. Check local authorization details.'));
         });
     }
+if (pdfBtn) {
 
+    pdfBtn.addEventListener("click", () => {
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const identity =
+        document.getElementById("res-identity")?.innerText || "";
+
+        const message =
+        document.getElementById("res-message")?.innerText || "";
+
+        const mantra =
+        document.getElementById("res-mantra")?.innerText || "";
+
+        const habit =
+document.getElementById("res-habit")?.innerText || "";
+
+const warning =
+document.getElementById("res-warning")?.innerText || "";
+
+       doc.setFontSize(14);
+doc.text("Daily Habit Focus",20,180);
+
+doc.setFontSize(12);
+doc.text(
+    doc.splitTextToSize(habit,170),
+    20,
+    190
+);
+
+doc.setFontSize(14);
+doc.text("Critical Warning",20,220);
+
+doc.setFontSize(12);
+doc.text(
+    doc.splitTextToSize(warning,170),
+    20,
+    230
+);
+doc.setFontSize(18);
+doc.text("FutureMe Report", 20, 20);
+
+doc.setFontSize(14);
+doc.text("Identity Profile", 20, 40);
+
+doc.setFontSize(12);
+doc.text(identity, 20, 50);
+
+doc.setFontSize(14);
+doc.text("Future Self Message", 20, 70);
+
+const wrappedMessage =
+doc.splitTextToSize(message, 170);
+
+doc.text(wrappedMessage, 20, 80);
+
+doc.setFontSize(14);
+doc.text("Daily Alignment Mantra",20,260);
+
+doc.setFontSize(12);
+doc.text(
+    doc.splitTextToSize(mantra,170),
+    20,
+    270
+);
+doc.save("FutureMe_Report.pdf");
+    });
+
+
+
+}
     if (btnRegenerate) {
         btnRegenerate.addEventListener('click', () => {
             // Hide result experience blocks
